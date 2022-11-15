@@ -1,0 +1,360 @@
+
+#include<iostream>
+#include<conio.h>
+#include<string>
+#include<stdio.h>
+#include<string.h>
+#include<fstream>
+#include<stdlib.h>
+#include<locale.h>
+
+using namespace std;
+
+
+int *numero , *year , registros , n = 1 , desicion;
+string *nombre , *clasificacion , *caracteristicas , *descripcion , *genero, *consola;
+float *precio , *iva , *total;
+
+
+void alta();
+void modificar();
+void eliminar();
+void lista();
+void archivo();
+
+
+int main()
+{
+setlocale(LC_CTYPE, "Spanish");
+
+int opcion;
+
+printf("\n ARCTIC GAMING \n");
+printf("======================= \n");
+printf("1.- Agregar articulo \n");
+printf("2.- Modificar articulo \n");
+printf("3.- Eliminar articulo \n");
+printf("4.- Lista de articulos \n");
+printf("5.- Limpiar pantalla \n");
+printf("6.- Salir \n");
+printf("======================= \n");
+printf("Seleccione una opcion: ");
+scanf_s("%d", &opcion);
+
+switch(opcion)
+{
+case 1:
+
+alta();
+system("pause");
+return main();
+break;
+
+case 2:
+
+modificar();
+system("pause");
+return main();
+break;
+
+case 3:
+
+eliminar();
+system("pause");
+return main();
+break;
+
+case 4:
+
+lista();
+system("pause");
+return main();
+break;
+
+case 5:
+
+system("cls");
+return main();
+break;
+
+case 6:
+
+archivo();
+exit(1);
+break;
+
+default:
+
+printf("Digite una opcion correcta \n");
+printf("=============================");
+printf("Digite 1 para volver al menu: ");
+
+return main();
+break;
+}
+
+}
+
+
+void alta()
+{
+
+system("cls");
+
+printf("Cuantos registros desea dar de alta: ");
+scanf_S("%d", &registros);
+
+numero = new int [ registros ];
+year = new int [ registros ];
+
+nombre = new string [ registros ];
+clasificacion = new string [ registros ];
+caracteristicas = new string [ registros ];
+genero = new string [ registros ];
+descripcion = new string [ registros ];
+
+precio = new float [ registros ];
+iva = new float [ registros ];
+total = new float [ registros ];
+
+for(int i = 0; i < registros; i++)
+{
+printf("Ingrese el numero de articulo: \n");
+scanf_s("%d", &numero[i]);
+
+do
+{
+if(numero[i] != numero[i-n])
+{
+n = n + 1;
+}
+else
+{
+printf("El articulo ya existe\n");
+printf("Ingrese el articulo: \n");
+scanf_s("%d", &numero[i]);
+}
+
+}while(n < registros);
+
+printf("Ingrese el nombre del articulo: \n");
+getline( cin , nombre[i]);
+
+printf("Ingrese el año de lanzamiento del articulo: \n");
+scanf_s("%d", &year[i]);
+
+printf("Ingrese la clasificacion del articulo: \n");
+getline( cin , clasificacion[i]);
+
+printf("Ingrese las caracteristicas del articulo: \n");
+getline( cin , caracteristicas[i]);
+
+printf("Ingrese la descripcion del articulo: \n");
+getline( cin , descripcion[i]);
+
+printf("Ingrese el genero del articulo: \n");
+getline( cin , genero[i]);
+
+printf("Ingrese la consola del videojuego: \n");
+getline( cin , consola[i]);
+
+printf("Ingrese el precio del articulo: \n");
+scanf_s("%f", &precio[i]);
+iva[i] = precio[i] * .16;
+total[i] = precio[i] + iva[i];
+
+system("cls");
+}
+}
+
+
+void modificar()
+{
+
+system("cls");
+
+int modificar2;
+
+do
+{
+printf("Ingrese el articulo a modificar: ");
+scanf_s("%d", &modificar2);
+
+}while(modificar2 <= 0);
+
+for(int i = 0; i < registros; i++)
+{
+if(modificar2 == numero[i])
+{
+
+printf("Ingrese el nombre del articulo: \n");
+getline( cin , nombre[i]);
+
+printf("Ingrese el año de lanzamiento del articulo: \n");
+scanf_s("%d", &year[i]);
+
+printf("Ingrese la clasificacion del articulo: \n");
+getline( cin , clasificacion[i]);
+
+printf("Ingrese las caracteristicas del articulo: \n");
+getline( cin , caracteristicas[i]);
+
+printf("Ingrese la descripcion del articulo: \n");
+getline( cin , descripcion[i]);
+
+printf("Ingrese el genero del articulo: \n");
+getline( cin , genero[i]);
+
+printf("Ingrese la consola del videojuego: \n");
+getline( cin , consola[i]);
+
+printf("Ingrese el precio del articulo: \n");
+scanf_s("%f", &precio[i]);
+iva[i] = precio[i] * .16;
+total[i] = precio[i] + iva[i];
+
+}
+}
+
+system("cls");
+}
+
+
+void eliminar()
+{
+system("cls");
+
+int eliminar2;
+
+printf("Ingrese el numero del articulo a eliminar: \n");
+scanf_s("%d", &eliminar2);
+
+for(int i = 0; i < registros; i++)
+{
+if(eliminar2 == numero[i])
+{
+numero[i] = 0;
+}
+}
+
+system("cls");
+}
+
+
+void lista()
+{
+
+int opcion2;
+string busc;
+
+printf("1.- Clasificacion \n");
+printf("2.- Genero \n");
+printf("Seleccione una opcion: \n");
+scanf_s("%d", &opcion2);
+
+switch(opcion2)
+{
+
+case 1:
+
+printf("Ingrese la clasificacion a buscar: \n");
+cin.ignore();
+getline(cin, busc);
+
+for(int i = 0; i < registros; i++)
+{
+if(clasificacion[i] == busc)
+{
+if(numero[i] != 0)
+{
+
+printf("Articulo: %d" , numero[i]);
+printf("Videojuego: %d",nombre[i]);
+printf("Año: %d",year[i]);
+printf("Clasificacion: %s",clasificacion[i]);
+printf("Caracteristicas: %s",caracteristicas[i]);
+printf("Descripcion: %s",descripcion[i]);
+printf("Genero: %s",genero[i]);
+printf("Consola: %s",consola[i]);
+printf("Subtotal: %d",precio[i]);
+printf("Iva: %d",iva[i]);
+printf("Total: %d",total[i]);
+
+}
+}
+
+}
+
+case 2:
+
+printf("Ingrese el genero a buscar: \n");
+cin.ignore();
+getline(cin, busc);
+
+for(int i = 0; i < registros; i++)
+{
+if(genero[i] == busc)
+{
+if(numero[i] != 0)
+{
+
+printf("Articulo: %d" , numero[i]);
+printf("Videojuego: %d",nombre[i]);
+printf("Año: %d",year[i]);
+printf("Clasificacion: %s",clasificacion[i]);
+printf("Caracteristicas: %s",caracteristicas[i]);
+printf("Descripcion: %s",descripcion[i]);
+printf("Genero: %s",genero[i]);
+printf("Consola: %s",consola[i]);
+printf("Subtotal: %d",precio[i]);
+printf("Iva: %d",iva[i]);
+printf("Total: %d",total[i]);
+
+
+}
+}
+}
+
+}
+
+}
+
+
+void archivo()
+{
+ofstream archivos;
+string nombre2;
+
+nombre = "ARCTIC GAMING";
+archivos.open(nombre2.c_str(),ios::out);
+
+if(archivos.fail())
+{
+printf("Error no se genero el archivo");
+system("pause");
+exit(1);
+}
+
+archivos << "t INFORMACION";
+
+for(int i = 0; i < registros; i++)
+{
+if(numero[i] != 0)
+{
+
+archivos << "Dato" << i + 1 << endl;
+archivos << "Articulo: " << numero[i] << endl;
+archivos << "Año: " << year[i] << endl;
+archivos << "Clasificacion: " << clasificacion[i] << endl;
+archivos << "Caracteristicas: " << caracteristicas[i] << endl;
+archivos << "Descripcion: " << descripcion[i] <<endl;
+archivos << "Genero: " << genero[i] << endl;
+archivos << "Precio: " << precio[i] << endl;
+archivos << "Iva: " << iva[i] << endl;
+archivos << "Total: " << total[i] <<endl;
+}
+
+archivos.close();
+}
+
+}
